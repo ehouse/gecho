@@ -2,3 +2,4 @@ gecho.egg-info
 dist
 build
 *.pyc
+test.py

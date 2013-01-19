@@ -5,10 +5,13 @@ import zmq
 
 from daemon import runner
 from gecho.procfs import *
+
+gechoQueue = Queue.Queue()
+gechoQueue.put("test")
+
 class gechod():
 	def __init__(self):
 
-		gechoQueue = Queue.Queue()
 
 		self.stdin_path = '/dev/null'
 		self.stdout_path = '/dev/tty'
@@ -21,7 +24,12 @@ class gechod():
 		socket = context.socket(zmq.PUB)
 		socket.connect("tcp://127.0.0.1:5000") #TODO Configure in file
 		while True:
-			pass
+			if not gechoQueue.empty():
+				try:
+					print "Popping Message"
+					pubcontent = gechoQueue.get()
+				except:
+					pass
 
 app = gechod()
 daemon_runner = runner.DaemonRunner(app)
