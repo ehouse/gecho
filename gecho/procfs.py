@@ -7,6 +7,7 @@ import os
 import glob
 
 from gecho.cpu import ProcCPU
+from gecho.memory import ProcMemval
 
 class procfs(object):
 	""" /proc Utility class """
