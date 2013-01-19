@@ -2,17 +2,17 @@ import daemon
 import Queue
 import time
 import zmq
+import jsonpickle
 
 from daemon import runner
 from gecho.procfs import *
 
+# Global message queue construction
 gechoQueue = Queue.Queue()
-gechoQueue.put("test")
 
 class gechod():
+	""" gecho daemon """
 	def __init__(self):
-
-
 		self.stdin_path = '/dev/null'
 		self.stdout_path = '/dev/tty'
 		self.stderr_path = '/dev/tty'
@@ -26,10 +26,14 @@ class gechod():
 		while True:
 			if not gechoQueue.empty():
 				try:
-					print "Popping Message"
 					pubcontent = gechoQueue.get()
+					if hasattr(pubcontent, "subscription"):
+						jcontent = pubcontent.encode(pubcontent)
+						print jcontent
+					else:
+						print "Popped non-publishable data, disposing."
 				except:
-					pass
+					print "Exception popping queue content."
 
 app = gechod()
 daemon_runner = runner.DaemonRunner(app)
