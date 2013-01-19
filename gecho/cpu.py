@@ -14,3 +14,8 @@ class ProcCPU(object):
 		self.iowait = iowait# Waiting for I/O complete
 		self.irq = irq		# Servicing interrupts
 		self.softirq = softirq	# Servicing softirq's
+
+	def __str__(self):
+		return self.name + " " + self.user + " " + self.user + " " + self.niced\
+			+ " " + self.system + " " + self.idle + " " + self.iowait + " " +\
+			self.irq + " " + self.softirq

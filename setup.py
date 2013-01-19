@@ -12,6 +12,7 @@ install_requires = [ ]
 
 setup(name="gecho",
 		packages=["gecho"],
+		requires=["PySensors", "pyzmq", "python-daemon"],
 		version=version,
 		classifiers=[
 			"Programming Language :: Python :: 2.7",
