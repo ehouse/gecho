@@ -3,7 +3,8 @@ Will Dignazio
 gecho 2012
 """
 
-class ProcCPUEntry(object):
-	""" /proc/stat CPU Entry """
-	def __init__():
+class proc(object):
+	""" /proc Utility class """
+	@staticmethod
+	def read_cpus():
 		pass

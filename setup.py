@@ -11,6 +11,7 @@ readme_fp.close()
 install_requires = [ ]
 
 setup(name="gecho",
+		packages=["gecho"],
 		version=version,
 		classifiers=[
 			"Programming Language :: Python :: 2.7",
