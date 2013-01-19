@@ -1,4 +1,4 @@
-#!/bin/python
+#!python
 import multiprocessing, logging
 import sys
 from setuptools import setup, find_packages
