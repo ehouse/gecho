@@ -10,9 +10,8 @@ from gecho.procfs import *
 # Global message queue construction
 gechoQueue = Queue.Queue()
 
-gechoQueue.put(ProcMemval("test", 100000))
-gechoQueue.put(ProcMemval("test2", 10000))
-gechoQueue.put(ProcMemval("test3", 3399494))
+for cpu in procfs.get_cpus():
+	gechoQueue.put(cpu)
 
 class gechod():
 	""" gecho daemon """
@@ -24,10 +23,14 @@ class gechod():
 		self.pidfile_timeout = 5
 
 	def run(self):
+		ProcCPU.spawn_cpu_monitor(1)
 		context = zmq.Context()
 		socket = context.socket(zmq.PUB)
 		socket.connect("tcp://127.0.0.1:5000") #TODO Configure in file
 		while True:
+			time.sleep(1)
+			for cpu in procfs.get_cpus():
+				gechoQueue.put(cpu)
 			if not gechoQueue.empty():
 				pubcontent = gechoQueue.get()
 				if hasattr(pubcontent, "subscription"):

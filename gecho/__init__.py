@@ -1,3 +1,3 @@
 import Queue
 
-global gechoQueue 
+global gechoQueue
