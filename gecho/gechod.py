@@ -10,6 +10,10 @@ from gecho.procfs import *
 # Global message queue construction
 gechoQueue = Queue.Queue()
 
+gechoQueue.put(ProcMemval("test", 100000))
+gechoQueue.put(ProcMemval("test2", 10000))
+gechoQueue.put(ProcMemval("test3", 3399494))
+
 class gechod():
 	""" gecho daemon """
 	def __init__(self):
@@ -25,15 +29,13 @@ class gechod():
 		socket.connect("tcp://127.0.0.1:5000") #TODO Configure in file
 		while True:
 			if not gechoQueue.empty():
-				try:
-					pubcontent = gechoQueue.get()
-					if hasattr(pubcontent, "subscription"):
-						jcontent = pubcontent.encode(pubcontent)
-						print jcontent
-					else:
-						print "Popped non-publishable data, disposing."
-				except:
-					print "Exception popping queue content."
+				pubcontent = gechoQueue.get()
+				if hasattr(pubcontent, "subscription"):
+					jcontent = jsonpickle.encode(pubcontent)
+					socket.send_multipart([pubcontent.subscription, jcontent])
+					print pubcontent.subscription, jcontent
+				else:
+					print "Popped non-publishable data, disposing."
 
 app = gechod()
 daemon_runner = runner.DaemonRunner(app)

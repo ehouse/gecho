@@ -6,6 +6,7 @@ gecho 2013
 class ProcMemval(object):
 	""" Entry in /proc/meminfo """
 	def __init__(self, value, memkb):
+		self.subscription = "MEM"
 		self.value = value
 		self.memkb = memkb
 

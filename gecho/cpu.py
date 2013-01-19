@@ -6,6 +6,7 @@ gecho 2013
 class ProcCPU(object):
 	""" /proc/stat CPU Entry """
 	def __init__(self, name, user, niced, system, idle, iowait, irq, softirq):
+		self.subscription = "CPU"
 		self.name = name
 		self.user = user	# User processes
 		self.niced = niced	# Processes under niced
