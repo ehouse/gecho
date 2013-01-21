@@ -6,12 +6,11 @@ import jsonpickle
 
 from daemon import runner
 from gecho.procfs import *
+from gecho.cpu import ProcCPU
+from gecho import GechoGlobal, GechoGlobal
 
 # Global message queue construction
-gechoQueue = Queue.Queue()
-
-for cpu in procfs.get_cpus():
-	gechoQueue.put(cpu)
+#gechoQueue = Queue.Queue(1000)
 
 class gechod():
 	""" gecho daemon """
@@ -23,20 +22,17 @@ class gechod():
 		self.pidfile_timeout = 5
 
 	def run(self):
-		ProcCPU.spawn_cpu_monitor(1)
+		ProcCPU.spawn_cpu_monitor(1) #Spawn CPU monitor
 		context = zmq.Context()
 		socket = context.socket(zmq.PUB)
-		socket.connect("tcp://127.0.0.1:5000") #TODO Configure in file
+		socket.bind("tcp://0.0.0.0:5000") #TODO Configure in file
 		while True:
-			time.sleep(1)
-			for cpu in procfs.get_cpus():
-				gechoQueue.put(cpu)
-			if not gechoQueue.empty():
-				pubcontent = gechoQueue.get()
+			if not GechoGlobal.gechoQueue.empty():
+				pubcontent = GechoGlobal.gechoQueue.get()
 				if hasattr(pubcontent, "subscription"):
 					jcontent = jsonpickle.encode(pubcontent)
 					socket.send_multipart([pubcontent.subscription, jcontent])
-					print pubcontent.subscription, jcontent
+					#print pubcontent.subscription, jcontent
 				else:
 					print "Popped non-publishable data, disposing."
 
