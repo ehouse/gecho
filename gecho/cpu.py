@@ -36,14 +36,18 @@ class ProcCPU(object):
 			more problems than solutions; our problem is IO bound,
 			and separating instances will not alleviate this.
 		"""
-		def work(idle):
+		def work():
 			""" TODO: Add stop logic """
 			while True:
-				time.sleep(idle)
+				time.sleep(GechoGlobal.cpu_monitor_idle)
 				for cpu in gecho.procfs.get_cpus():
 					GechoGlobal.gechoQueue.put(cpu)
 		try:
-			thread.start_new_thread(work, (idle,))
+			if GechoGlobal.cpu_monitor_active == False:
+				thread.start_new_thread(work,())
+				GechoGlobal.cpu_monitor_active = True
+			else:
+				GechoGlobal.cpu_idle_time = idle
 		except Exception as E:
 			print "Unable to start CPU worker thread: %s", E
 
