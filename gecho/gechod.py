@@ -29,7 +29,6 @@ class gechod():
 		socket = context.socket(zmq.PUB)
 		socket.bind("tcp://0.0.0.0:5000") #TODO Configure in file
 		while True:
-			print GechoGlobal.gechoQueue.qsize()
 			time.sleep(GechoGlobal.verbosity) # Main idle wait, keeps CPU from hemorraging (spelling?)
 			if not GechoGlobal.gechoQueue.empty():
 				pubcontent = GechoGlobal.gechoQueue.get()
