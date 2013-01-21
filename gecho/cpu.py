@@ -38,7 +38,7 @@ class ProcCPU(object):
 		"""
 		def work():
 			""" TODO: Add stop logic """
-			while True:
+			while GechoGlobal.cpu_monitor_active:
 				time.sleep(GechoGlobal.cpu_monitor_idle)
 				for cpu in gecho.procfs.get_cpus():
 					GechoGlobal.gechoQueue.put(cpu)
