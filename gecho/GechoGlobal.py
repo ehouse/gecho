@@ -2,10 +2,17 @@ import gecho
 import Queue
 
 """
-I can't freaking believe I have to do this
-in order to share variables across modules
-sanely. I thought this was a joke, I was sadly
-mistaken.
+	The verbosity setting for the main thread, in other words
+	the idle time between the popping of publishing data between
+	cpu cycles. A value of 1 means 1 message per second, etc.
+"""
+verbosity = 1
+
+"""
+	I can't freaking believe I have to do this
+	in order to share variables across modules
+	sanely. I thought this was a joke, I was sadly
+	mistaken.
 """
 gechoQueue = Queue.Queue(100) # Fill in with parsed config value
 
@@ -16,3 +23,11 @@ gechoQueue = Queue.Queue(100) # Fill in with parsed config value
 """
 cpu_monitor_active = False
 cpu_monitor_idle = 1
+
+"""
+	The gecho memory monitor active and idle time fields, just
+	like the cpu monitor, keeps track of whether it is active and
+	the idle time between increments.
+"""
+mem_monitor_active = False
+mem_monitor_idle = 1

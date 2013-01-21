@@ -7,6 +7,7 @@ import jsonpickle
 from daemon import runner
 from gecho.procfs import *
 from gecho.cpu import ProcCPU
+from gecho.memory import ProcMem
 from gecho import GechoGlobal, GechoGlobal
 
 # Global message queue construction
@@ -23,10 +24,13 @@ class gechod():
 
 	def run(self):
 		ProcCPU.spawn_cpu_monitor(1) #Spawn CPU monitor
+		ProcMem.spawn_memory_monitor(1)
 		context = zmq.Context()
 		socket = context.socket(zmq.PUB)
 		socket.bind("tcp://0.0.0.0:5000") #TODO Configure in file
 		while True:
+			print GechoGlobal.gechoQueue.qsize()
+			time.sleep(GechoGlobal.verbosity) # Main idle wait, keeps CPU from hemorraging (spelling?)
 			if not GechoGlobal.gechoQueue.empty():
 				pubcontent = GechoGlobal.gechoQueue.get()
 				if hasattr(pubcontent, "subscription"):

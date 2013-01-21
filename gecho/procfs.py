@@ -7,7 +7,7 @@ import os
 import glob
 
 from gecho.cpu import ProcCPU
-from gecho.memory import ProcMemval
+from gecho.memory import ProcMem
 
 
 def get_cpus():
@@ -33,5 +33,5 @@ def meminfo():
 	meminfo = open('/proc/meminfo')
 	for line in meminfo.readlines():
 		attrs = line.split(':')
-		memblocks.append(ProcMemval(attrs[0].strip(), attrs[1].split()[0]))
+		memblocks.append(ProcMem(attrs[0].strip(), attrs[1].split()[0]))
 	return memblocks
