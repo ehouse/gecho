@@ -31,3 +31,12 @@ cpu_monitor_idle = 1
 """
 mem_monitor_active = False
 mem_monitor_idle = 1
+
+"""
+	The gecho mdadm monitor active and idle time fields,
+	monitors the /proc/mdstat file for changes in raid arrays.
+	This feature requires proper access to the /proc/mdstat file,
+	it typically has root privileges.
+"""
+mdadm_monitor_active = False
+mdadm_monitor_idle = 1

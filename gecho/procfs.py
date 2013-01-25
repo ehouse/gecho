@@ -6,9 +6,11 @@ gecho 2013
 import os
 import glob
 
+import jsonpickle
+
 from gecho.cpu import ProcCPU
 from gecho.memory import ProcMem
-
+from gecho.mdadm import ProcMDADM
 
 def get_cpus():
 	""" Gets the cpus from /proc/stat """
@@ -26,6 +28,25 @@ def get_cpus():
 								attrs[6].strip(), #irq
 								attrs[7].strip()))#softirq
 	return cpus
+
+def mdstat():
+	""" Gets the RAID info from /proc/mdstat """
+	raid = []
+	stat = open("/proc/mdstat")
+	for line in stat.readlines():
+		print "line"
+		if line[:2] == "md": # Entry starts with md[whatever]
+			splitline = line.split(':')
+			name = splitline[0]
+			info = spliteline[1].split(' ' ) # Second half of raid entry
+			status = info[0].strip()
+			personality = info[1]
+			members = info[2:]
+			entry = ProcMDADM(name, status, personality, members)
+			raid.append(entry)
+			print "HERE"
+			print jsonpickle.encode(entry)
+	return raid
 
 def meminfo():
 	""" gets the memory info from /proc/meminfo """
