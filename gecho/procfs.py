@@ -34,17 +34,17 @@ def mdstat():
 	raid = []
 	stat = open("/proc/mdstat")
 	for line in stat.readlines():
-		print "line"
 		if line[:2] == "md": # Entry starts with md[whatever]
 			splitline = line.split(':')
-			name = splitline[0]
-			info = splitline[1].split(' ' ) # Second half of raid entry
+			name = splitline[0].strip()
+			info = splitline[1].split(' ' ).strip() # Second half of raid entry
 			status = info[0].strip()
-			personality = info[1]
+			personality = info[1].strip()
 			members = info[2:]
+			for member in members:
+				member.strip()
 			entry = ProcMDADM(name, status, personality, members)
 			raid.append(entry)
-			print "HERE"
 			print jsonpickle.encode(entry)
 	return raid
 
