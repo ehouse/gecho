@@ -37,7 +37,9 @@ def mdstat():
 		if line[:2] == "md": # Entry starts with md[whatever]
 			splitline = line.split(':')
 			name = splitline[0].strip()
+			print name
 			info = splitline[1].split(' ' ) # Second half of raid entry
+			print info
 			status = info[0].strip()
 			personality = info[1].strip()
 			members = info[2:]

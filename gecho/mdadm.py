@@ -28,7 +28,6 @@ class ProcMDADM(object):
 			while GechoGlobal.mdadm_monitor_active:
 				time.sleep(GechoGlobal.mdadm_monitor_idle)
 				for raid in gecho.procfs.mdstat():
-					print "HAS RAID"
 					GechoGlobal.gechoQueue.put(raid)
 		try:
 			if GechoGlobal.mdadm_monitor_active == False:
