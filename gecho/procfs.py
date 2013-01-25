@@ -41,8 +41,9 @@ def mdstat():
 			status = info[0].strip()
 			personality = info[1].strip()
 			members = info[2:]
-			for member in members:
-				member.strip()
+			for entries in members:
+				for member in entries:
+					member.strip()
 			entry = ProcMDADM(name, status, personality, members)
 			raid.append(entry)
 			print jsonpickle.encode(entry)
