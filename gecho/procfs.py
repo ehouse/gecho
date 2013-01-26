@@ -45,7 +45,6 @@ def mdstat():
 				member = member.strip()
 			entry = ProcMDADM(name, status, personality, members)
 			raid.append(entry)
-			print jsonpickle.encode(entry)
 	return raid
 
 def meminfo():
