@@ -42,7 +42,7 @@ def mdstat():
 			personality = info[2].strip()
 			members = info[3:]
 			for member in members:
-				member = member.strip()
+				member = member.strip().remove('\n')
 			entry = ProcMDADM(name, status, personality, members)
 			raid.append(entry)
 			print jsonpickle.encode(entry)
