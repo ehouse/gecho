@@ -6,7 +6,7 @@ import Queue
 	the idle time between the popping of publishing data between
 	cpu cycles. A value of 1 means 1 message per second, etc.
 """
-verbosity = 1
+verbosity = 0.1
 
 """
 	I can't freaking believe I have to do this
@@ -14,7 +14,7 @@ verbosity = 1
 	sanely. I thought this was a joke, I was sadly
 	mistaken.
 """
-gechoQueue = Queue.Queue(100) # Fill in with parsed config value
+gechoQueue = Queue.Queue(1000) # Fill in with parsed config value
 
 """
 	The gecho cpu monitor active and idle time fields, keeps
