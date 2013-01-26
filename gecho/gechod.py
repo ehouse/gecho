@@ -8,6 +8,7 @@ from daemon import runner
 from gecho.procfs import *
 from gecho.cpu import ProcCPU
 from gecho.memory import ProcMem
+from gecho.mdadm import ProcMDADM
 from gecho import GechoGlobal, GechoGlobal
 
 # Global message queue construction
@@ -23,8 +24,11 @@ class gechod():
 		self.pidfile_timeout = 5
 
 	def run(self):
+
 		ProcCPU.spawn_cpu_monitor(1) #Spawn CPU monitor
 		ProcMem.spawn_memory_monitor(1)
+		ProcMDADM.spawn_mdadm_monitor(1)
+
 		context = zmq.Context()
 		socket = context.socket(zmq.PUB)
 		socket.bind("tcp://0.0.0.0:5000") #TODO Configure in file

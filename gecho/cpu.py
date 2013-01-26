@@ -27,8 +27,6 @@ class ProcCPU(object):
 			+ " " + self.system + " " + self.idle + " " + self.iowait + " " +\
 			self.irq + " " + self.softirq
 
-
-
 	@staticmethod
 	def spawn_cpu_monitor(idle):
 		""" Spawns A CPU Monitor, returns a reference to it.

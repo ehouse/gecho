@@ -13,6 +13,7 @@ import jsonpickle
 class ProcMDADM(object):
 	""" /proc/mdadm RAID Entry """
 	def __init__(self, name,status, personality, members):
+		self.subscription = "MDADM"
 		self.name = name
 		self.status = status
 		self.members = members
